@@ -45,26 +45,23 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func checkForWeather(_ sender: UIButton) {
         checkForWeatherButton.alpha = 0.5
         checkForWeatherButton.isEnabled = false
-
+        
         Networking.getCurrentWeather(latitude, longitude: longitude) { (item, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
             }
-            // MARK: save to userdefaults --- need to remove
             if let item = item {
                 var dataArray: [WeatherItem] = []
-                if let recovedUserArrayData = UserDefaults.standard.object(forKey: "dataArray") as? Data {
-                    let decoder = JSONDecoder()
-                    if let loadedItems = try? decoder.decode([WeatherItem].self, from: recovedUserArrayData) {
-                        print(loadedItems.count)
-                        dataArray = loadedItems
-                    }
-                }
+                dataArray = DataManager.getCurrentArray()
+                
                 dataArray.append(item)
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(dataArray) {
-                    UserDefaults.standard.set(encoded, forKey: "dataArray")
+                DataManager.writeToUserDefaults(items: dataArray)
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "detailVC") as? DetailViewController
+                    vc?.item = item
+                    self.present(vc!, animated: true, completion: nil)
                 }
             }
             DispatchQueue.main.async {
@@ -74,11 +71,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         updateCoordinateButton.alpha = 0.5
         updateCoordinateButton.isEnabled = false
-
+        
         guard let location = locations.first else { return }
         
         getAddress(forLocation: location) { (placemark, error) in
@@ -106,7 +102,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
         print("Failed to find user's location: \(error.localizedDescription)")
     }
     
-    func getAddress(forLocation location: CLLocation, completionHandler: @escaping (CLPlacemark?, String?) -> ()) {
+    private func getAddress(forLocation location: CLLocation, completionHandler: @escaping (CLPlacemark?, String?) -> ()) {
         let geocoder = CLGeocoder()
         
         geocoder.reverseGeocodeLocation(location, completionHandler: {
