@@ -10,21 +10,29 @@ import UIKit
 import CoreLocation
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate {
-
+    
     @IBOutlet weak var coordinateLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var updateCoordinateButton: UIButton!
+    @IBOutlet weak var checkForWeatherButton: UIButton!
     
-    let locationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
+    private var latitude: String = ""
+    private var longitude: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        updateCoordinateButton.alpha = 0.5
+        updateCoordinateButton.isEnabled = false
+        checkForWeatherButton.alpha = 0.5
+        checkForWeatherButton.isEnabled = false
         
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.requestLocation()
         }
     }
@@ -35,11 +43,44 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func checkForWeather(_ sender: UIButton) {
+        checkForWeatherButton.alpha = 0.5
+        checkForWeatherButton.isEnabled = false
+
+        Networking.getCurrentWeather(latitude, longitude: longitude) { (item, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            // MARK: save to userdefaults --- need to remove
+            if let item = item {
+                var dataArray: [WeatherItem] = []
+                if let recovedUserArrayData = UserDefaults.standard.object(forKey: "dataArray") as? Data {
+                    let decoder = JSONDecoder()
+                    if let loadedItems = try? decoder.decode([WeatherItem].self, from: recovedUserArrayData) {
+                        print(loadedItems.count)
+                        dataArray = loadedItems
+                    }
+                }
+                dataArray.append(item)
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(dataArray) {
+                    UserDefaults.standard.set(encoded, forKey: "dataArray")
+                }
+            }
+            DispatchQueue.main.async {
+                self.checkForWeatherButton.alpha = 1
+                self.checkForWeatherButton.isEnabled = true                
+            }
+        }
     }
     
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
+        updateCoordinateButton.alpha = 0.5
+        updateCoordinateButton.isEnabled = false
 
+        guard let location = locations.first else { return }
+        
         getAddress(forLocation: location) { (placemark, error) in
             if let error = error {
                 print(error)
@@ -48,14 +89,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate {
                 let locality = placemark.locality ?? ""
                 let thoroughfare = placemark.thoroughfare ?? ""
                 
-                
                 self.addressLabel.text = "Address: \(country), \(locality), \(thoroughfare)"
             }
         }
-        
+        latitude = "\(location.coordinate.latitude)"
+        longitude = "\(location.coordinate.longitude)"
         coordinateLabel.text = "Coordinate: \(location.coordinate.latitude) \n \(location.coordinate.longitude)"
+        self.updateCoordinateButton.alpha = 1
+        self.updateCoordinateButton.isEnabled = true
+        
+        self.checkForWeatherButton.alpha = 1
+        self.checkForWeatherButton.isEnabled = true
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to find user's location: \(error.localizedDescription)")
     }

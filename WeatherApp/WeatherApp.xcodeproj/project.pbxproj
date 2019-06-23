@@ -14,6 +14,7 @@
 		F3914FA122BD005600B2B4CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3914F9F22BD005600B2B4CF /* LaunchScreen.storyboard */; };
 		F3914FA922BD0C7000B2B4CF /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3914FA822BD0C7000B2B4CF /* SecondViewController.swift */; };
 		F3914FAB22BD113F00B2B4CF /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3914FAA22BD113F00B2B4CF /* Networking.swift */; };
+		F3914FAD22BEBC7A00B2B4CF /* WeatherItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3914FAC22BEBC7A00B2B4CF /* WeatherItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		F3914FA222BD005600B2B4CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3914FA822BD0C7000B2B4CF /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		F3914FAA22BD113F00B2B4CF /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		F3914FAC22BEBC7A00B2B4CF /* WeatherItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				F3914F9822BD005500B2B4CF /* FirstViewController.swift */,
 				F3914FAA22BD113F00B2B4CF /* Networking.swift */,
 				F3914FA822BD0C7000B2B4CF /* SecondViewController.swift */,
+				F3914FAC22BEBC7A00B2B4CF /* WeatherItem.swift */,
 				F3914F9A22BD005500B2B4CF /* Main.storyboard */,
 				F3914F9D22BD005600B2B4CF /* Assets.xcassets */,
 				F3914F9F22BD005600B2B4CF /* LaunchScreen.storyboard */,
@@ -143,6 +146,7 @@
 			files = (
 				F3914FA922BD0C7000B2B4CF /* SecondViewController.swift in Sources */,
 				F3914F9922BD005500B2B4CF /* FirstViewController.swift in Sources */,
+				F3914FAD22BEBC7A00B2B4CF /* WeatherItem.swift in Sources */,
 				F3914F9722BD005500B2B4CF /* AppDelegate.swift in Sources */,
 				F3914FAB22BD113F00B2B4CF /* Networking.swift in Sources */,
 			);

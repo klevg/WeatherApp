@@ -64,7 +64,9 @@
                     <tabBarItem key="tabBarItem" title="Archive" id="sN7-cu-jaF"/>
                     <connections>
                         <outlet property="addressLabel" destination="pJR-Sg-Tsg" id="xKh-yr-5Tu"/>
+                        <outlet property="checkForWeatherButton" destination="38x-v9-nIP" id="4Ur-tb-zIG"/>
                         <outlet property="coordinateLabel" destination="aMl-qx-ajJ" id="do5-ng-BR3"/>
+                        <outlet property="updateCoordinateButton" destination="UOd-9k-MsD" id="UAA-8u-TWW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -96,7 +98,19 @@
                     <view key="view" contentMode="scaleToFill" id="Uem-kK-zEu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zyP-Wu-WvN">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HHn-Xm-lrR" firstAttribute="bottom" secondItem="zyP-Wu-WvN" secondAttribute="bottom" id="0TI-L2-N7w"/>
+                            <constraint firstItem="HHn-Xm-lrR" firstAttribute="trailing" secondItem="zyP-Wu-WvN" secondAttribute="trailing" id="Jwf-bW-qrg"/>
+                            <constraint firstItem="zyP-Wu-WvN" firstAttribute="top" secondItem="HHn-Xm-lrR" secondAttribute="top" id="Vh1-F2-D0x"/>
+                            <constraint firstItem="zyP-Wu-WvN" firstAttribute="leading" secondItem="HHn-Xm-lrR" secondAttribute="leading" id="dzQ-kU-U4R"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="HHn-Xm-lrR"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Now" id="n1J-bf-cgu"/>
@@ -104,6 +118,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KO8-Zp-VNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="948" y="722"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="7qT-gn-apf">
+            <objects>
+                <viewController storyboardIdentifier="detailVC" id="x7C-zp-gy5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AL0-di-PoE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1fv-UY-ahQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WvT-ge-OQK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1897" y="11"/>
         </scene>
     </scenes>
 </document>
